@@ -17,8 +17,6 @@
 \RequirePackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
 \RequirePackage[toc,lof]{multitoc}
 
-\RequirePackage{asymptote}
-
 \RequirePackage[colorlinks,linkcolor=blue]{hyperref}
 
 \SetupKeyvalOptions{family=INK, prefix=INK@, setkeys=\kvsetkeys}
@@ -41,7 +39,6 @@
 \setlist[enumerate,3]{leftmargin=1em,itemsep=0ex,itemindent=2em,listparindent=2em,parsep = 0ex,topsep = 1ex}
 \setlist[itemize,1]{itemsep = 0ex, parsep = 0ex, topsep = 1ex}
 \setlist[description]{listparindent=2em, itemsep=0ex, parsep = 0ex,topsep = 1ex}
-\makeatletter
 \ctexset{
 	figurename={\kaishu 图},
 	tablename={表},
@@ -162,34 +159,6 @@
 \arrayrulewidth=0.4pt
 }
 
-\newcommand{\ds}{\displaystyle}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\mbf}{\boldsymbol}
-\newcommand{\mrm}[1]{\boldsymbol{\mathnormal{#1}}}
-\newcommand{\bnb}{\mbf{\nabla}}
-\newcommand{\pl}{\partial}
-\newcommand{\arcosh}{\mathrm{arcosh}\,}
-\newcommand{\sn}{\mathrm{sn}\,}
-\newcommand{\cn}{\mathrm{cn}\,}
-\newcommand{\tn}{\mathrm{tn}\,}
-\newcommand{\dn}{\mathrm{dn}\,}
-\newcommand{\am}{\mathrm{am}\,}
-\newcommand{\mathd}{\mathrm{d}}
-\newcommand{\mathe}{\mathrm{e}}
-\newcommand{\mathi}{\mathrm{i}}
-\newcommand{\mathj}{\mathrm{j}}
-\newcommand{\mathk}{\mathrm{k}}
-\renewcommand{\vec}{\overrightarrow}
-\renewcommand{\bf}{\heiti}
-\renewcommand{\bfseries}{\heiti}
-\newcommand{\ddt}{\dfrac{\mathd}{\mathd t}}
-\newcommand{\difOp}[1]{\dfrac{\mathd}{\mathd #1}}
-\newcommand{\dif}[2]{\dfrac{\mathd #1}{\mathd #2}}
-\newcommand{\pldif}[2]{\dfrac{\pl #1}{\pl #2}}
-\newcommand{\trans}{\mathrm{T}}
-\renewcommand{\Re}{\mathrm{Re}\,}
-\renewcommand{\Im}{\mathrm{Im}\,}
-
 \newtheoremstyle{theoremwithoutdot}% 类型名
   {}%                   Space above, empty = `usual value'
   {}%                   Space below
@@ -246,6 +215,7 @@
 \long\def\@makefntext#1{{%
   \let\@makefnmark\my@makefnmark
   \my@save@makefntext{#1}}}
+\makeatother
 
 % Blocked theorem environment
 \RequirePackage[framemethod=TikZ]{mdframed}
