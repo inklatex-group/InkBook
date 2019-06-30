@@ -414,32 +414,15 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 {0pc}{1.5ex plus .1ex minus .2ex}{.2pc}
 }
 
-
-
-%Error here!
-% \makeatletter
-
-% \renewcommand{\appendix}{
-    
-% \titleformat{\chapter}[hang]{\heiti\LARGE}
-% {}{0mm}{\hspace{-0.4cm}\myappendix}
- 
-% \titleformat{\section}[hang]{\heiti\LARGE}
-% {}{0mm}{\hspace{-0.5cm}\appendixsection}
-
-% \titleformat{\subsection}[hang]{\heiti\large}
-% {}{0mm}{\hspace{-0.5cm}\appendixsubsection}
-
-% \titleformat{\subsubsection}[hang]{\heiti\large}
-% {}{0mm}{\hspace{-0.5cm}\appendixsubsubsection}
-% \setcounter{section}{0}% 复位section计数器
-% \renewcommand\thechapter{\Alph{chapter}}
-% \renewcommand\thesection{\arabic{section}}%
-% \renewcommand{\chaptermark}[1]{\markboth{附录\ \ #1}{}}
-% \renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
-% \markboth{\leftmark}{\rightmark}	
-
-% }
-
-
-% \makeatother
+\let\oldAppendix\appendix
+\newcommand{\inkAppendix}{%
+\oldAppendix%  
+\titleformat{\chapter}[hang]{\heiti\LARGE}{}{0mm}{\hspace{-0.4cm}\myappendix}%
+\titleformat{\section}[hang]{\heiti\LARGE}{}{0mm}{\hspace{-0.5cm}\appendixsection}%
+\titleformat{\subsection}[hang]{\heiti\large}{}{0mm}{\hspace{-0.5cm}\appendixsubsection}%
+\titleformat{\subsubsection}[hang]{\heiti\large}{}{0mm}{\hspace{-0.5cm}\appendixsubsubsection}%
+\renewcommand{\chaptermark}[1]{\markboth{附录\ \ ##1}{}}%
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm ##1}{}}
+\markboth{\leftmark}{\rightmark}%
+}
+\renewcommand{\appendix}{\inkAppendix}
