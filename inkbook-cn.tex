@@ -1,33 +1,68 @@
-\documentclass{inkbook}
 
-\title{Test}
-\author{Moyan Liang \and Dapeng Zhang}
+% !TeX encoding = UTF-8
+\documentclass[en]{inkbook}
+
+\title{\textsf{inkbook}:一个充满墨香的书籍模板}
+\author{Moyan Liang\thanks{\aka{梁莫言}.} \and Dapeng Zhang\thanks{\aka{张大鹏}.}}
+\titheader{使用手册}
+\equote{\begin{equation*}
+    \int_a^b f(x)\mathd x =\mathcal{F}(x)\Big|_a^b. 
+\end{equation*}}
 \usepackage{lipsum}
+
 \begin{document}
     \maketitle
     \tableofcontents
     \part{使用手册}
-    \chapter{效果展示}
-    \section{Lipsum Test}
-    \lipsum[1-20]
-    \section{定理展示}
-    \begin{theorem}[Exempli Gratia]
-        定理测试!
-    \end{theorem}
-    \begin{lemma}
-        引理测试!
-    \end{lemma}
-    \begin{definition}
-        定义测试!
-    \end{definition}
-    \begin{conjecture}
-        猜想测试!
-    \end{conjecture}
-    \begin{proof}
-        \begin{equation}
-        \int_a^b f(x)\mathd x =\mathcal{F}(x)\Big|_a^b. 
-    \end{equation}
-    \end{proof}
-    \chapter{如何使用}
     
+    \chapter{如何使用}
+    \section{引言}
+    这是在张大鹏排版的\textit{经典力学讲义}的基础上整理而成的模板.使用了C\TeX{}来显示中文.使用\textsf{mdframed}宏包来改写定理环境.
+    \section{引用 \textsf{inkbook}}
+    \begin{lstlisting}[language=TeX]
+        \documentclass[(lang=)cn/en]{inkbook}
+    \end{lstlisting}
+    来引用\textsf{inkbook}.
+    \section{定理环境}
+    \begin{theorem}
+        这是\textsf{theorem}环境.
+    \end{theorem}
+    \textsf{inkbook}提供了两种引理环境,一种适用于证明环境内,一种适用于普通环境内.
+    \begin{fancylemma}
+        这是适用于普通环境内的\textsf{fancylemma}环境.
+    \end{fancylemma}
+    \begin{lemma}
+        这是适用于证明环境内的\textsf{lemma}环境.
+    \end{lemma}
+    \begin{proposition}
+        这是\textsf{proposition}环境.
+    \end{proposition}
+    \begin{conjecture}
+        这是\textsf{conjecture}环境.
+    \end{conjecture}
+    \begin{corollary}
+        这是\textsf{corollary}环境.
+    \end{corollary}
+    \begin{figure}
+        \begin{lstlisting}[language=TeX]
+            \newtheorem{example}{Example}[chapter]
+            \newtheorem{question}{Question}[section]
+            \newtheorem*{solution}{Solution}
+            \newblocktheorem[section]{theorem}{Theorem}
+            \newblocktheorem[section]{fancylemma}{Lemma} %
+            \newtheorem{lemma}{Lemma}[section]
+            \newblocktheorem[section]{proposition}{Proposition} %
+            \newblocktheorem{corollary}{Corollary} %
+            \newblocktheorem{law}{Law}
+            \newblocktheorem{definition}{Definition}[section] %
+            \newblocktheorem{conjecture}{conjecture}[section] %
+            \theoremstyle{remark} %
+            \newtheorem*{remark}{\normalfont\bfseries Remark} %
+            \newtheorem*{note}{\normalfont\bfseries Note} %
+            \newtheorem{case}{\normalfont\bfseries Case} %
+            \renewcommand*{\proofname}{\normalfont\bfseries\color{black}Proof} %
+        \end{lstlisting}
+        \caption{定义摘录}
+    \end{figure}
+
 \end{document}

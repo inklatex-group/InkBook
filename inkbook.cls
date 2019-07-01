@@ -6,10 +6,10 @@
 % \RequirePackage[draft]{graphicx}
 \RequirePackage{graphicx}
 \RequirePackage{subfigure}
-
+\AtEndOfClass{\RequirePackage{microtype}}
 \RequirePackage{latexsym, amsmath, amssymb, amsfonts, mathrsfs, amsthm}
 \RequirePackage{siunitx}
-
+\RequirePackage{cite}
 \RequirePackage{cases}
 
 \RequirePackage{multirow}
@@ -34,7 +34,34 @@
 \setcounter{secnumdepth}{3} %使subsubsection也有编号
 
 \RequirePackage{fancyhdr}	%页眉页脚
-
+\RequirePackage{ifxetex}
+% \ifxetex
+% 	\RequirePackage{fontenc}
+% 	\RequirePackage[no-math]{fontspec}
+%     \setsansfont{Arial}
+%     \setmonofont[Scale=0.7]{Courier New}
+% 	%\setmonofont[Scale=0.7]{Courier New}
+% 	\RequirePackage{xeCJK}
+% 	\RequirePackage{xunicode}
+% 	\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]{SimSun}
+% 	\setCJKsansfont[BoldFont={SimHei},ItalicFont={KaiTi}]{KaiTi}
+% 	\setCJKmonofont[BoldFont={SimHei},ItalicFont={KaiTi},Scale=0.7]{Microsoft YaHei}
+% 	\XeTeXlinebreaklocale "zh"
+% 	\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+% 	\RequirePackage{newtxmath}
+% 	%\DeclareSymbolFont{operators}{OT1}{ntxtlf}{m}{n}
+% 	%\SetSymbolFont{operators}{bold}{OT1}{ntxtlf}{b}{n}
+% 	\setCJKfamilyfont{zhsong}{SimSun}
+% 	\setCJKfamilyfont{zhhei}{SimHei}
+% 	\setCJKfamilyfont{zhkai}{KaiTi}
+% 	\setCJKfamilyfont{zhfs}{FangSong}
+% 	\renewcommand*{\songti}{\CJKfamily{zhsong}} 
+% 	\renewcommand*{\heiti}{\CJKfamily{zhhei}}   
+% 	\renewcommand*{\kaishu}{\CJKfamily{zhkai}} 
+% 	\renewcommand*{\fangsong}{\CJKfamily{zhfs}} 
+% \else
+% \relax
+% \fi
 \RequirePackage[inline]{enumitem}
 \setlist[enumerate,1]{leftmargin=0pt,itemindent=2em,itemsep=0ex,listparindent=2em,parsep = 0ex,topsep = 1ex}
 \setlist[enumerate,2]{leftmargin=1em,itemsep=0ex,itemindent=2em,listparindent=2em,parsep = 0ex,topsep = 1ex}
@@ -225,7 +252,7 @@
 \renewcommand*{\tableofcontents}{
 	\titleformat{\chapter}[hang]{\heiti\LARGE}
 {}{0mm}{\hspace{-0.4cm}\mycont}
-\chapter*{目录}
+\chapter*{\contentsname}
 \vspace*{50pt}
 	\@starttoc{toc}
 	\titleformat{\chapter}[hang]{\heiti\LARGE}
@@ -238,14 +265,14 @@
 %带圈脚注
 \RequirePackage{pifont}
 \RequirePackage[perpage,stable]{footmisc}  %每页脚注重新编号
-\renewcommand{\thefootnote}{\ding{\numexpr191+\value{footnote}}}
-% 脚注中的脚注序号不用上标，正文中的脚注号保持不变
-\makeatletter
-\def\my@makefnmark{\hbox{\normalfont\@thefnmark\space}}
-\let\my@save@makefntext\@makefntext
-\long\def\@makefntext#1{{%
-  \let\@makefnmark\my@makefnmark
-  \my@save@makefntext{#1}}}
+%  \renewcommand{\thefootnote}{\ding{\numexpr191+\value{footnote}}}
+% % 脚注中的脚注序号不用上标，正文中的脚注号保持不变
+ \makeatletter
+% \def\my@makefnmark{\hbox{\normalfont\@thefnmark\space}}
+% \let\my@save@makefntext\@makefntext
+% \long\def\@makefntext#1{{%
+%   \let\@makefnmark\my@makefnmark
+%   \my@save@makefntext{#1}}}
 
 % Blocked theorem environment
 \RequirePackage[framemethod=TikZ]{mdframed}
@@ -288,7 +315,8 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \newtheorem{question}{题}[section]
 \newtheorem*{solution}{解}
 \newblocktheorem[section]{theorem}{定理}
-\newblocktheorem[section]{lemma}{引理} %
+\newblocktheorem[section]{fancylemma}{引理} %
+\newtheorem{lemma}{引理}[section]
 \newblocktheorem[section]{proposition}{性质} %
 \newblocktheorem{corollary}{推论} %
 \newblocktheorem{law}{定律}
@@ -299,28 +327,43 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \newtheorem*{note}{\normalfont\bfseries 注} %
 \newtheorem{case}{\normalfont\bfseries 案例} %
 \renewcommand*{\proofname}{\normalfont\bfseries\color{black}证明} %
+\renewcommand*{\contentsname}{目录}
 
 }{\relax}
 
+
 \ifdefstring{\INK@lang}{en}{
-	\theoremstyle{theoremwithoutdot}
+\theoremstyle{theoremwithoutdot}
 \newtheorem{example}{Example}[chapter]
 \newtheorem{question}{Question}[section]
 \newtheorem*{solution}{Solution}
 \newblocktheorem[section]{theorem}{Theorem}
-\newblocktheorem[section]{lemma}{Lemma} %
+\newblocktheorem[section]{fancylemma}{Lemma} %
+\newtheorem{lemma}{Lemma}[section]
 \newblocktheorem[section]{proposition}{Proposition} %
 \newblocktheorem{corollary}{Corollary} %
-\newblocktheorem{law}{Law}
-\newblocktheorem{definition}{Definition}[section] %
-\newblocktheorem{conjecture}{conjecture}[section] %
+\newblocktheorem{law}{Law} %
+\newblocktheorem[section]{definition}{Definition} %
+\newblocktheorem[section]{conjecture}{Conjecture} %
 \theoremstyle{remark} %
 \newtheorem*{remark}{\normalfont\bfseries Remark} %
 \newtheorem*{note}{\normalfont\bfseries Note} %
 \newtheorem{case}{\normalfont\bfseries Case} %
 \renewcommand*{\proofname}{\normalfont\bfseries\color{black}Proof} %
-
+\renewcommand*{\contentsname}{Contents} %
+\renewcommand\bibname{Bibliography} %
 }{\relax}
+
+
+\RequirePackage{listings}
+\lstset{
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
 \allowdisplaybreaks[3]
 
 %样式定义
@@ -344,6 +387,8 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \newpage
 \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 
+\newtoks\equote
+\newtoks\titheader
 \renewcommand*{\maketitle}{
 	\renewcommand{\and}{\quad}
 	\let\footnotesize\small
@@ -352,15 +397,29 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 	\thispagestyle{empty}
 	\vspace*{50pt}
 	\begin{flushright}
+	{\heiti\large\the\titheader\par}
+	\vspace*{50pt}
 	\begin{tabular}{p{0.01\textwidth}p{0.98\textwidth}}
 	\cellcolor{black} &\cellcolor{covercolor}\textcolor{white}
-	\newline\heiti\LARGE \@title \par
+		\newline\heiti\LARGE \@title \par
 	\end{tabular}
+	
+	\end{flushright}
 	\vspace*{50pt}
-
+	\begin{center}
+		{\kaishu\Large \the\equote \par}
+	\end{center}
+	
+	\begin{flushright}
+		\vspace*{50pt}
+	\hrule
+	\vspace*{20pt}
 	{\heiti\Large \@author \par}
 	{\heiti\Large \@date \par}
 	\end{flushright}
+	
+	\newpage
+	\thispagestyle{empty}
 	\@thanks
 	\cleardoublepage
 \global\let\thanks\relax
@@ -374,6 +433,7 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \global\let\date\relax
 \global\let\and\relax
 }
+
 \makeatother
 
 %在插图目录图编号前加上“图”
@@ -383,14 +443,22 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{第\zhnumber{\thechapter}章\ \ #1}{}}
+\ifdefstring{\INK@lang}{cn}{
+	\renewcommand{\chaptermark}[1]{\markboth{第\zhnumber{\thechapter}章\ \ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
+}{\relax}
+\ifdefstring{\INK@lang}{en}{
+	\renewcommand{\chaptermark}[1]{\markboth{Chapter \arabic{\thechapter}\ \ #1}{}}
+	\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
+}{\relax}
+
 \markboth{\leftmark}{\rightmark}
 \fancyhf{}
 \fancyhead[CO]{\rightmark}
 \fancyhead[LE,RO]{$\cdot$\, \thepage\, $\cdot$}
 \fancyhead[CE]{\leftmark}
 
+\newcommand{\aka}{\textsc{a.k.a.}}
 
 
 \AtEndOfClass{
@@ -417,29 +485,54 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 
 
 %Error here!
-% \makeatletter
-
-% \renewcommand{\appendix}{
+\makeatletter
+\ifdefstring{\INK@lang}{cn}{
+	\renewcommand{\appendix}[1]{
     
-% \titleformat{\chapter}[hang]{\heiti\LARGE}
-% {}{0mm}{\hspace{-0.4cm}\myappendix}
+\titleformat{\chapter}[hang]{\heiti\LARGE}
+{}{0mm}{\hspace{-0.4cm}\myappendix}
  
-% \titleformat{\section}[hang]{\heiti\LARGE}
-% {}{0mm}{\hspace{-0.5cm}\appendixsection}
+\titleformat{\section}[hang]{\heiti\LARGE}
+{}{0mm}{\hspace{-0.5cm}\appendixsection}
 
-% \titleformat{\subsection}[hang]{\heiti\large}
-% {}{0mm}{\hspace{-0.5cm}\appendixsubsection}
+\titleformat{\subsection}[hang]{\heiti\large}
+{}{0mm}{\hspace{-0.5cm}\appendixsubsection}
 
-% \titleformat{\subsubsection}[hang]{\heiti\large}
-% {}{0mm}{\hspace{-0.5cm}\appendixsubsubsection}
-% \setcounter{section}{0}% 复位section计数器
-% \renewcommand\thechapter{\Alph{chapter}}
-% \renewcommand\thesection{\arabic{section}}%
-% \renewcommand{\chaptermark}[1]{\markboth{附录\ \ #1}{}}
-% \renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
-% \markboth{\leftmark}{\rightmark}	
+\titleformat{\subsubsection}[hang]{\heiti\large}
+{}{0mm}{\hspace{-0.5cm}\appendixsubsubsection}
+\setcounter{section}{0}% 复位section计数器
+\renewcommand\thechapter{\Alph{chapter}}
+\renewcommand\thesection{\arabic{section}}%
+\renewcommand{\chaptermark}[1]{\markboth{附录\ \ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
+\markboth{\leftmark}{\rightmark}	
 
-% }
+}
+}{\relax}
+\ifdefstring{\INK@lang}{en}{
+	\renewcommand{\appendix}[1]{
+    
+		\titleformat{\chapter}[hang]{\heiti\LARGE}
+		{}{0mm}{\hspace{-0.4cm}\myappendix}
+		 
+		\titleformat{\section}[hang]{\heiti\LARGE}
+		{}{0mm}{\hspace{-0.5cm}\appendixsection}
+		
+		\titleformat{\subsection}[hang]{\heiti\large}
+		{}{0mm}{\hspace{-0.5cm}\appendixsubsection}
+		
+		\titleformat{\subsubsection}[hang]{\heiti\large}
+		{}{0mm}{\hspace{-0.5cm}\appendixsubsubsection}
+		\setcounter{section}{0}% 复位section计数器
+		\renewcommand\thechapter{\Alph{chapter}}
+		\renewcommand\thesection{\arabic{section}}%
+		\renewcommand{\chaptermark}[1]{\markboth{Appendix\ \ #1}{}}
+		\renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm #1}{}}	%这两个命令第一次必须出现在\pagestyle{fancy}之后，否则\pagestyle{fancy}会覆盖掉其效果
+		\markboth{\leftmark}{\rightmark}	
+		
+		}
+}
 
 
-% \makeatother
+
+\makeatother
