@@ -11,7 +11,7 @@
 \RequirePackage{siunitx}
 \RequirePackage{cite}
 \RequirePackage{cases}
-
+\RequirePackage{etoolbox}
 \RequirePackage{multirow}
 \RequirePackage{textcomp}
 \RequirePackage[top=2.54cm, bottom=2.54cm, left=3.18cm, right=3.18cm]{geometry}
@@ -24,8 +24,8 @@
 \DeclareStringOption[cn]{lang}
 \DeclareVoidOption{cn}{\ekv{lang = cn}}
 \DeclareVoidOption{en}{\ekv{lang = en}}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
-%\ExecuteOptions{12pt}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\ExecuteOptions{12pt}
 \ProcessKeyvalOptions*\relax
 \ProcessOptions
 
@@ -79,7 +79,7 @@
 \begin{tabular}{p{0.01\textwidth}p{0.99\textwidth}}
 	\arrayrulewidth=0.4pt
 	\cellcolor{black} & \cellcolor{partcolor} \textcolor{white}
-	{\newline\heiti\Huge 第\thepart 部分} \\
+	{\newline\heiti\Huge 第\thepart 部分}\\
 	\hline
 	\cellcolor{black} & \multicolumn{1}{r}{\cellcolor{partcolor} \textcolor{white}
 	{\huge #1}}
@@ -186,6 +186,7 @@
 \arrayrulewidth=0.4pt
 }
 
+
 \newtheoremstyle{theoremwithoutdot}% 类型名
   {}%                   Space above, empty = `usual value'
   {}%                   Space below
@@ -232,17 +233,17 @@
 
 %\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 %带圈脚注
-\RequirePackage{pifont}
-\RequirePackage[perpage,stable]{footmisc}  %每页脚注重新编号
-\renewcommand{\thefootnote}{\ding{\numexpr191+\value{footnote}}}
-% 脚注中的脚注序号不用上标，正文中的脚注号保持不变
-\makeatletter
-\def\my@makefnmark{\hbox{\normalfont\@thefnmark\space}}
-\let\my@save@makefntext\@makefntext
-\long\def\@makefntext#1{{%
-  \let\@makefnmark\my@makefnmark
-  \my@save@makefntext{#1}}}
-\makeatother
+% \RequirePackage{pifont}
+% \RequirePackage[perpage,stable]{footmisc}  %每页脚注重新编号
+% \renewcommand{\thefootnote}{\ding{\numexpr191+\value{footnote}}}
+% % 脚注中的脚注序号不用上标，正文中的脚注号保持不变
+% \makeatletter
+% \def\my@makefnmark{\hbox{\normalfont\@thefnmark\space}}
+% \let\my@save@makefntext\@makefntext
+% \long\def\@makefntext#1{{%
+%   \let\@makefnmark\my@makefnmark
+%   \my@save@makefntext{#1}}}
+% \makeatother
 
 % Blocked theorem environment
 \RequirePackage[framemethod=TikZ]{mdframed}
@@ -279,8 +280,9 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \RequirePackage{xcolor}
 \RequirePackage{color}
 
+\makeatletter
 \ifdefstring{\INK@lang}{cn}{
-	\theoremstyle{theoremwithoutdot}
+\theoremstyle{theoremwithoutdot}
 \newtheorem{example}{例}[chapter]
 \newtheorem{question}{题}[section]
 \newtheorem*{solution}{解}
@@ -288,8 +290,8 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \newblocktheorem[section]{fancylemma}{引理} %
 \newtheorem{lemma}{引理}[section]
 \newblocktheorem[section]{proposition}{性质} %
-\newblocktheorem{corollary}{推论} %
-\newblocktheorem{law}{定律}
+\newblocktheorem[section]{corollary}{推论} %
+\newblocktheorem[section]{law}{定律}
 \newblocktheorem[section]{definition}{定义} %
 \newblocktheorem[section]{conjecture}{猜想} %
 \theoremstyle{remark} %
@@ -323,7 +325,7 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \renewcommand*{\contentsname}{Contents} %
 \renewcommand\bibname{Bibliography} %
 }{\relax}
-
+\makeatother
 
 \RequirePackage{listings}
 \lstset{
@@ -462,5 +464,17 @@ frametitleaboveskip=\dimexpr-\ht\strutbox\relax
 \renewcommand{\chaptermark}[1]{\markboth{附录\ \ ##1}{}}%
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ \ \rm ##1}{}}
 \markboth{\leftmark}{\rightmark}%
+\part{\appendixname}
 }
 \renewcommand{\appendix}{\inkAppendix}
+
+\makeatletter
+\let\oldlof\listoffigures
+\newcommand{\inklof}{
+	\titleformat{\chapter}[hang]{\heiti\LARGE}{}{0mm}{\hspace{-0.4cm}\mycont}
+	\chapter*{插图目录}
+	\vspace*{50pt}
+	\@starttoc{lof}
+}
+\renewcommand{\listoffigures}{\inklof}
+\makeatother

@@ -1,8 +1,39 @@
 
-% !TeX encoding = UTF-8
-\documentclass[en]{inkbook}
+\documentclass[cn]{inkbook}
 
 \title{\textsf{inkbook}:一个充满墨香的书籍模板}
+\makeatletter
+\newcommand\showfn\relax
+\makeatother
+\usepackage{blindtext}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\mbf}{\boldsymbol}
+\newcommand{\mrm}[1]{\boldsymbol{\mathnormal{#1}}}
+\newcommand{\bnb}{\mbf{\nabla}}
+\newcommand{\pl}{\partial}
+\newcommand{\arcosh}{\mathrm{arcosh}\,}
+\newcommand{\sn}{\mathrm{sn}\,}
+\newcommand{\cn}{\mathrm{cn}\,}
+\newcommand{\tn}{\mathrm{tn}\,}
+\newcommand{\dn}{\mathrm{dn}\,}
+\newcommand{\am}{\mathrm{am}\,}
+\newcommand{\mathd}{\mathrm{d}}
+\newcommand{\mathe}{\mathrm{e}}
+\newcommand{\mathi}{\mathrm{i}}
+\newcommand{\mathj}{\mathrm{j}}
+\newcommand{\mathk}{\mathrm{k}}
+\renewcommand{\vec}{\overrightarrow}
+\renewcommand{\bf}{\heiti}
+\renewcommand{\bfseries}{\heiti}
+\newcommand{\ddt}{\dfrac{\mathd}{\mathd t}}
+\newcommand{\difOp}[1]{\dfrac{\mathd}{\mathd #1}}
+\newcommand{\dif}[2]{\dfrac{\mathd #1}{\mathd #2}}
+\newcommand{\pldif}[2]{\dfrac{\pl #1}{\pl #2}}
+\newcommand{\trans}{\mathrm{T}}
+\renewcommand{\Re}{\mathrm{Re}\,}
+\renewcommand{\Im}{\mathrm{Im}\,}
+
 \author{Moyan Liang\thanks{\aka{梁莫言}.} \and Dapeng Zhang\thanks{\aka{张大鹏}.}}
 \titheader{使用手册}
 \equote{\begin{equation*}
@@ -70,8 +101,12 @@
         \int_a^b f(x)\mathd x =\mathcal{F}(x)\Big|_a^b. 
     \end{equation}
     \end{proof}
-    \chapter{如何使用}
-
+    \footnote{\[
+        \int_a^b f(x)\mathd x =\mathcal{F}(x)\Big|_a^b. 
+    \]}
+    \showfn
+    \part{效果展示}
+    \blinddocument
     \appendix
 
     \chapter{附录1}
@@ -89,5 +124,5 @@
     \section{附录2.2}
 
     \lipsum[2]
-    
+    \listoffigures
 \end{document}
